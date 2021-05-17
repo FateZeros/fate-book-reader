@@ -1,6 +1,6 @@
-<script lang="tsx">
+<script>
 import { defineComponent } from 'vue'
-import HelloWorld from '@/components/HelloWorld.vue' // @ is an alias to /src
+import HelloWorld from '../components/hello-word' // @ is an alias to /src
 
 export default defineComponent({
   name: 'Home',
@@ -9,11 +9,10 @@ export default defineComponent({
     HelloWorld
   },
 
-  // eslint-disable-next-line
   setup() {
     return () => (
       <div class="home">
-        <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+        <HelloWorld msg={'test'} />
       </div>
     )
   }
