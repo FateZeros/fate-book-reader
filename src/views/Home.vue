@@ -1,6 +1,6 @@
 <script>
 import { defineComponent } from 'vue'
-import HelloWorld from '../components/hello-word' // @ is an alias to /src
+import HelloWorld from '@/components/hello-word' // @ is an alias to /src
 
 export default defineComponent({
   name: 'Home',
