@@ -1,18 +1,18 @@
 <script>
 import { defineComponent } from 'vue'
-import HelloWorld from '@/components/hello-word' // @ is an alias to /src
+import Tabbars from '@/components/tab-bars' // @ is an alias to /src
 
 export default defineComponent({
   name: 'Home',
 
   components: {
-    HelloWorld
+    Tabbars
   },
 
   setup() {
     return () => (
       <div class="home">
-        <HelloWorld msg={'test'} />
+        <Tabbars />
       </div>
     )
   }
