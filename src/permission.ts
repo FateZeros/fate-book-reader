@@ -1,5 +1,6 @@
 import router from './router'
 
 router.beforeEach(async to => {
-  // document.title = to.meta.title || ''
+  const metaTilte: string = to.meta.title
+  document.title = metaTilte || undefined
 })
