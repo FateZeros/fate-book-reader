@@ -11,7 +11,7 @@ module.exports = {
     // hotOnly: false
     proxy: {
       '/CORS': {
-        target: 'localhost:9966',
+        target: 'http://localhost:9966',
         changeOrigin: true,
         pathRewrite: {
           '^/CORS': ''

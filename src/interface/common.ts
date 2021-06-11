@@ -2,9 +2,5 @@
 export interface HttpResponse {
   status: number
   statusText: string
-  data: {
-    code: number
-    msg: string
-    [key: string]: any
-  }
+  [key: string]: any
 }

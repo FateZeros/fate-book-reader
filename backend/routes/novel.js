@@ -53,9 +53,7 @@ router.get('/api/getNovelNameList', async ctx => {
   ctx.body = {
     code: 200,
     msg: '获取成功',
-    data: {
-      list: titleList
-    }
+    data: titleList
   }
 })
 

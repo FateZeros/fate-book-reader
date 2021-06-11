@@ -1,4 +1,4 @@
-import Request from '@/utils/request'
+import request from '@/utils/request'
 
 /*
  * 书架模块相关接口

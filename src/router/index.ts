@@ -21,6 +21,15 @@ const routes: Array<RouteRecordRaw> = [
         }
       },
       {
+        path: '/book-search',
+        name: 'book-search',
+        component: () =>
+          import(/* webpackChunkName: "book-shelf" */ '@/views/book-search/index.vue'),
+        meta: {
+          title: '搜书'
+        }
+      },
+      {
         path: '/mine',
         name: 'mine',
         // route level code-splitting
