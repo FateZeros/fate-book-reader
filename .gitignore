@@ -26,3 +26,6 @@ backend/node_modules
 
 remark*.md
 question*.md
+self-config/
+
+demo/*

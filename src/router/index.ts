@@ -10,21 +10,29 @@ const routes: Array<RouteRecordRaw> = [
     path: '/home',
     name: 'home',
     component: Home,
-    meta: {
-      title: '主页'
-    }
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ '@/views/about/index.vue'),
-    meta: {
-      title: '关于'
-    }
+    children: [
+      {
+        path: '/book-shelf',
+        name: 'book-shelf',
+        component: () =>
+          import(/* webpackChunkName: "book-shelf" */ '@/views/book-shelf/index'),
+        meta: {
+          title: '书架'
+        }
+      },
+      {
+        path: '/mine',
+        name: 'mine',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+          import(/* webpackChunkName: "mine" */ '@/views/mine/index.vue'),
+        meta: {
+          title: '我的'
+        }
+      }
+    ]
   }
 ]
 

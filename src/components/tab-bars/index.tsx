@@ -5,9 +5,13 @@ export default defineComponent({
 
   setup() {
     return () => (
-      <van-tabbar>
-        <van-tabbar-item icon="home-o">主页</van-tabbar-item>
-        <van-tabbar-item icon="setting-o">我的</van-tabbar-item>
+      <van-tabbar route>
+        <van-tabbar-item icon="home-o" replace to="/book-shelf">
+          书架
+        </van-tabbar-item>
+        <van-tabbar-item icon="user-o" replace to="/mine">
+          我的
+        </van-tabbar-item>
       </van-tabbar>
     )
   }

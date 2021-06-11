@@ -13,5 +13,6 @@ app.use(router)
 // 注册 UI 组件
 app.use(Tabbar)
 app.use(TabbarItem)
+
 // 挂载 app
 app.mount('#app')

@@ -11,7 +11,7 @@ module.exports = {
     // hotOnly: false
     proxy: {
       '/CORS': {
-        target: 'http://api.zhuishushenqi.com',
+        target: 'localhost:9966',
         changeOrigin: true,
         pathRewrite: {
           '^/CORS': ''
@@ -23,5 +23,18 @@ module.exports = {
     config.resolve.alias = {
       '@': path.join(__dirname, './src')
     }
+  },
+  chainWebpack: config => {
+    // [sass-resources-loader](https://github.com/shakacode/sass-resources-loader)
+    const oneOfsMap = config.module.rule('scss').oneOfs.store
+    oneOfsMap.forEach(item => {
+      item
+        .use('sass-resources-loader')
+        .loader('sass-resources-loader')
+        .options({
+          resources: ['./src/styles/index.scss']
+        })
+        .end()
+    })
   }
 }
