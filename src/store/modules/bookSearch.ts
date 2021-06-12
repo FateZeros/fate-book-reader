@@ -52,7 +52,9 @@ const actions = {
           commit('SET_BOOK_CHAPTER_LIST', bookChapterRes.data)
         }
       })
-      .catch(() => {})
+      .catch(() => {
+        throw new Error('网络错误')
+      })
       .finally(() => {})
   },
 

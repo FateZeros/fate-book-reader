@@ -48,6 +48,10 @@
         @choseBookChapter="handleChoseBookChapter"
       />
     </van-popup>
+    <van-empty image="network" description="网络错误" v-if="networdError">
+      <van-button type="primary" @click="handleBack">后退</van-button>
+      <van-button type="danger" @click="handleReload" class="ml24">重试</van-button>
+    </van-empty>
   </div>
 </template>
 
@@ -71,7 +75,8 @@ export default defineComponent({
       // 当前书籍
       novelHrefDecode: '',
       // 当前阅读章节 index
-      bookReadRecordChapterIndex: 0
+      bookReadRecordChapterIndex: 0,
+      networdError: false
     }
   },
 
@@ -118,14 +123,17 @@ export default defineComponent({
     this.searchBookChapterList({
       novelHref: this.novelHrefDecode
     }).then(() => {
+      this.networdError = false
       const bookReadRecord = getLocalStorage(bookReadRecordKey) || {}
       // 当前书籍的阅读章节记录
       this.bookReadRecordChapterIndex =
         bookReadRecord[this.novelHrefDecode] || 0
       const bookChapterHref = this.bookChapterList[
         this.bookReadRecordChapterIndex
-      ].novelChapterHref
+      ]?.novelChapterHref
       this.handleSearchBookContent(bookChapterHref)
+    }).catch(() => {
+      this.networdError = true
     })
   },
 
@@ -194,6 +202,10 @@ export default defineComponent({
       this.bookReadRecordChapterIndex = index
       this.showBookMenu = false
       this.handleSearchBookContent(bookChapterHref)
+    },
+
+    handleReload() {
+      window.location.reload()
     }
   }
 })
