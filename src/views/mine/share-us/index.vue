@@ -1,6 +1,8 @@
 <template>
   <div class="share-us-wrap">
     <BackRow />
+    <div class="qrcode-wrap" />
+    <p>扫码即可访问</p>
   </div>
 </template>
 
@@ -13,12 +15,6 @@ export default defineComponent({
 
   components: {
     BackRow
-  },
-
-  setup() {
-    onMounted(() => {
-      console.log(222)
-    })
   }
 })
 </script>
@@ -27,5 +23,12 @@ export default defineComponent({
 .share-us-wrap {
   width: 100%;
   height: 100%;
+
+  .qrcode-wrap {
+    width: 100%;
+    height: 200px;
+    background: url('../../../assets/qrcode.png') no-repeat center;
+    background-size: 200px;
+  }
 }
 </style>

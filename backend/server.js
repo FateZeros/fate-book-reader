@@ -15,7 +15,7 @@ app.use(json())
 
 app.use(
   cors({
-    origin: 'http://106.13.2.80:3333',
+    origin: 'http://106.13.2.80:1234',
     maxAge: 5,
     credentials: true,
     allowMethods: ['POST'],
