@@ -46,10 +46,17 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/book-detail',
     name: 'book-detail',
-    component: () =>
-      import(/* webpackChunkName: "mine" */ '@/views/book-detail/index.vue'),
+    component: () => import('@/views/book-detail/index.vue'),
     meta: {
       title: '书籍详情'
+    }
+  },
+  {
+    path: '/book-read',
+    name: 'book-read',
+    component: () => import('@/views/book-read/index.vue'),
+    meta: {
+      title: '书籍阅读'
     }
   },
   {

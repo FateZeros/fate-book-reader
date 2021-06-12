@@ -1,0 +1,62 @@
+.book-content-wrap {
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+  .book-chapter-content {
+    box-sizing: border-box;
+    padding: 20px;
+    font-size: 16px;
+    text-align: left;
+  }
+}
+
+.read-setting-wrap {
+  width: 100%;
+  height: 100%;
+  padding: 24px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+
+  .read-chapter-actions {
+    width: 100%;
+    height: 20px;
+    line-height: 20px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    padding: 0 12px;
+    box-sizing: border-box;
+  }
+
+  .read-setting-row {
+    width: 100%;
+    flex: 1;
+    display: flex;
+
+    .read-setting-item {
+      width: 54px;
+      height: 100%;
+
+      .read-setting-item-back {
+        width: 54px;
+        height: 40px;
+        background: url('../../assets/left-arrow.png') no-repeat center bottom;
+        background-size: 27px;
+      }
+
+      .read-setting-item-menu {
+        width: 54px;
+        height: 40px;
+        background: url('../../assets/menu.png') no-repeat center bottom;
+        background-size: 27px;
+      }
+
+      .read-setting-item-word {
+        width: 100%;
+        height: 20px;
+      }
+    }
+  }
+}

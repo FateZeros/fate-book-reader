@@ -14,6 +14,7 @@
       finished-text="没有更多了"
       @load="onLoad"
       class="book-name-list-wrap"
+      v-if="bookNameList.length > 0"
     >
       <div
         v-for="item in bookNameList"
@@ -31,6 +32,7 @@
         <RightArrow />
       </div>
     </van-list>
+    <van-empty v-else description="可以搜索你想看的书籍～" />
   </div>
 </template>
 
@@ -40,6 +42,7 @@ import { mapActions, mapState } from 'vuex'
 import RightArrow from '@/components/right-arrow/index.vue'
 import { bookDetailKey } from '@/config'
 import { setLocalStorage } from '@/utils/storage'
+import { Toast } from 'vant'
 
 export default defineComponent({
   name: 'book-search',
@@ -77,9 +80,15 @@ export default defineComponent({
         name: this.searchValue,
         page: this.currentPage
       }
+      Toast.loading({
+        message: '努力加载中...',
+        forbidClick: true
+      })
       this.searchBookList(postData).then(() => {
         this.currentPage += 1
         this.loading = false
+      }).finally(() => {
+        Toast.clear()
       })
     },
 

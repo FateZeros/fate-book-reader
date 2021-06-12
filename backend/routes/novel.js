@@ -75,9 +75,7 @@ router.get('/api/getNovelChapterList', async ctx => {
   ctx.body = {
     code: 200,
     msg: '获取成功',
-    data: {
-      list: novelChapterList
-    }
+    data: novelChapterList
   }
 })
 
@@ -98,9 +96,7 @@ router.get('/api/getNovelContent', async ctx => {
   ctx.body = {
     code: 200,
     msg: '获取成功',
-    data: {
-      novelContent
-    }
+    data: novelContent
   }
 })
 
