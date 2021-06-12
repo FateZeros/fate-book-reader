@@ -3,6 +3,16 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  background: #f5f6f9;
+}
+
+img {
+  border-radius: 5px;
+}
+
+.ml24 {
+  margin-left: 24px;
 }
 
 // transition fade

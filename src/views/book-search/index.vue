@@ -1,23 +1,35 @@
 <template>
-  <div>
+  <div class="book-search-wrap">
     <van-search
       v-model="searchValue"
       @search="onSearch"
       shape="round"
       background="#1871f8"
       placeholder="请输入搜索关键词"
+      class="book-search-input"
     />
     <van-list
       v-model="loading"
       :finished="finished"
       finished-text="没有更多了"
       @load="onLoad"
+      class="book-name-list-wrap"
     >
-      <van-cell
+      <div
         v-for="item in bookNameList"
         :key="item.id"
-        :title="item.novelName"
-      />
+        class="book-name-list-item"
+        @click="handleGoBookDetail(item)"
+      >
+        <div class="item-img">
+          <img :src="item.novelImg" alt="" />
+        </div>
+        <div class="item-title">
+          <div class="item-title-name">{{item.novelName}}</div>
+          <div class="item-title-author">{{item.novelAuthor}}</div>
+        </div>
+        <RightArrow />
+      </div>
     </van-list>
   </div>
 </template>
@@ -25,6 +37,9 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { mapActions, mapState } from 'vuex'
+import RightArrow from '@/components/right-arrow/index.vue'
+import { bookDetailKey } from '@/config'
+import { setLocalStorage } from '@/utils/storage'
 
 export default defineComponent({
   name: 'book-search',
@@ -33,11 +48,16 @@ export default defineComponent({
     return {}
   },
 
+  components: {
+    RightArrow
+  },
+
   data() {
     return {
       searchValue: '',
       loading: false,
-      finished: false
+      finished: false,
+      currentPage: 1
     }
   },
 
@@ -45,20 +65,44 @@ export default defineComponent({
     ...mapState('bookSearch', ['bookNameList'])
   },
 
+  unmounted() {
+    this.currentPage = 1
+  },
+
   methods: {
     ...mapActions('bookSearch', ['searchBookList']),
 
-    onSearch() {
+    getBookNameList() {
       const postData = {
         name: this.searchValue,
-        page: 1
+        page: this.currentPage
       }
-      this.searchBookList(postData)
+      this.searchBookList(postData).then(() => {
+        this.currentPage += 1
+        this.loading = false
+      })
+    },
+
+    onSearch() {
+      this.getBookNameList()
     },
 
     onLoad() {
-      console.log(1)
+      if (this.loading) {
+        this.getBookNameList()
+      }
+    },
+
+    handleGoBookDetail(item: any) {
+      setLocalStorage(bookDetailKey, item)
+      this.$router.push({
+        name: 'book-detail'
+      })
     }
   }
 })
 </script>
+
+<style lang="scss" scoped>
+@import './index.scss';
+</style>

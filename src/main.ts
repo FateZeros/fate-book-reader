@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import { Tabbar, TabbarItem, Search, List, Cell } from 'vant'
+import { Tabbar, TabbarItem, Search, List, Cell, Empty, Button } from 'vant'
 
 import App from './App.vue'
 import router from './router'
@@ -16,6 +16,8 @@ app.use(TabbarItem)
 app.use(Search)
 app.use(List)
 app.use(Cell)
+app.use(Empty)
+app.use(Button)
 
 // 挂载 app
 app.mount('#app')

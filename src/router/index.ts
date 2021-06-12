@@ -15,7 +15,7 @@ const routes: Array<RouteRecordRaw> = [
         path: '/book-shelf',
         name: 'book-shelf',
         component: () =>
-          import(/* webpackChunkName: "book-shelf" */ '@/views/book-shelf/index'),
+          import(/* webpackChunkName: "book-shelf" */ '@/views/book-shelf/index.vue'),
         meta: {
           title: '书架'
         }
@@ -26,7 +26,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () =>
           import(/* webpackChunkName: "book-shelf" */ '@/views/book-search/index.vue'),
         meta: {
-          title: '搜书'
+          title: '书城'
         }
       },
       {
@@ -42,6 +42,23 @@ const routes: Array<RouteRecordRaw> = [
         }
       }
     ]
+  },
+  {
+    path: '/book-detail',
+    name: 'book-detail',
+    component: () =>
+      import(/* webpackChunkName: "mine" */ '@/views/book-detail/index.vue'),
+    meta: {
+      title: '书籍详情'
+    }
+  },
+  {
+    path: '/share-us',
+    name: 'share-us',
+    component: () => import('@/views/mine/share-us/index.vue'),
+    meta: {
+      title: '分享'
+    }
   }
 ]
 

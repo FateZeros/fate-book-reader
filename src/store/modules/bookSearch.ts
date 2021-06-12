@@ -33,7 +33,7 @@ const actions = {
 // mutations
 const mutations = {
   SET_BOOK_NAME_LIST: (state: any, data: bookNameList) => {
-    state.bookNameList = data
+    state.bookNameList = state.bookNameList.concat(data)
   }
 }
 

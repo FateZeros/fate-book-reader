@@ -1,9 +1,24 @@
-<script lang="tsx">
+<template>
+  <router-view v-slot="{ Component }">
+    <transition
+      name="fade"
+      mode="out-in"
+    >
+      <component :is="Component"></component>
+    </transition>
+  </router-view>
+</template>
+
+<script lang="ts">
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  setup() {
-    return () => <router-view />
+  watch: {
+    // $route(to, from) {
+    //   const toDepth = to.path.split('/').length
+    //   const fromDepth = from.path.split('/').length
+    //   this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left'
+    // }
   }
 })
 </script>
