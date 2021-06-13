@@ -1,9 +1,20 @@
 <template>
   <div class="book-content-wrap">
+    <van-popup
+      v-model:show="showReadSetting"
+      position="top"
+      :style="{ height: '60px' }"
+      :overlay="false"
+    >
+      <div class="book-chapter-title">{{bookChapterList[bookReadRecordChapterIndex].novelChapterName}}</div>
+    </van-popup>
     <div
       class="book-chapter-content"
       v-html="bookChapterContent"
       @click="handleShowReadSetting"
+      :style="{
+        background: currentBackground
+      }"
     />
     <van-popup
       v-model:show="showReadSetting"
@@ -32,6 +43,13 @@
             <div class="read-setting-item-menu"></div>
             <div class="read-setting-item-word">目录</div>
           </li>
+          <li
+            class="read-setting-item"
+            @click="handleShowFontSetting"
+          >
+            <div class="read-setting-item-font"></div>
+            <div class="read-setting-item-word">设置</div>
+          </li>
         </ul>
       </div>
     </van-popup>
@@ -48,6 +66,25 @@
         @choseBookChapter="handleChoseBookChapter"
       />
     </van-popup>
+    <van-popup
+      v-model:show="showFontSetting"
+      round
+      position="bottom"
+      :style="{ height: '20%' }"
+      :overlay="false"
+    >
+      <div class="font-setting-wrap">
+        <ul class="font-color-row">
+          <li
+            class="font-color-item"
+            v-for="item in fontColors"
+            :key="item.id"
+            :style="{ background: item.color }"
+            @click="handleChoseBackground(item.color)"
+          />
+        </ul>
+      </div>
+    </van-popup>
     <van-empty image="network" description="网络错误" v-if="networdError">
       <van-button type="primary" @click="handleBack">后退</van-button>
       <van-button type="danger" @click="handleReload" class="ml24">重试</van-button>
@@ -58,10 +95,11 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 import { mapActions, mapState } from 'vuex'
-import { bookReadRecordKey } from '@/config'
+import { bookReadRecordKey, bookReadSettingKey } from '@/config'
 import { getLocalStorage, setLocalStorage } from '@/utils/storage'
 import { Toast } from 'vant'
 import BookChapters from '@/components/book-chapters/index.vue'
+import { fontColors } from './constant'
 
 export default defineComponent({
   name: 'book-read',
@@ -76,7 +114,9 @@ export default defineComponent({
       novelHrefDecode: '',
       // 当前阅读章节 index
       bookReadRecordChapterIndex: 0,
-      networdError: false
+      networdError: false,
+      fontColors,
+      currentBackground: ''
     }
   },
 
@@ -87,9 +127,11 @@ export default defineComponent({
   setup() {
     const showReadSetting = ref(false)
     const showBookMenu = ref(false)
+    const showFontSetting = ref(false)
 
     const handleShowReadSetting = () => {
       showReadSetting.value = !showReadSetting.value
+      showFontSetting.value = false
     }
 
     const handleShowBookMenu = (e: Event) => {
@@ -100,11 +142,21 @@ export default defineComponent({
       }, 500)
     }
 
+    const handleShowFontSetting = (e: Event) => {
+      if (e) e.stopPropagation()
+      showReadSetting.value = false
+      setTimeout(() => {
+        showFontSetting.value = true
+      }, 500)
+    }
+
     return {
       showReadSetting,
       showBookMenu,
+      showFontSetting,
       handleShowReadSetting,
-      handleShowBookMenu
+      handleShowBookMenu,
+      handleShowFontSetting
     }
   },
 
@@ -135,6 +187,10 @@ export default defineComponent({
     }).catch(() => {
       this.networdError = true
     })
+
+    // 获取阅读设置
+    const { readBg = '#f4f4f4' } = getLocalStorage(bookReadSettingKey) || {}
+    this.currentBackground = readBg
   },
 
   methods: {
@@ -206,6 +262,14 @@ export default defineComponent({
 
     handleReload() {
       window.location.reload()
+    },
+
+    handleChoseBackground(color: string) {
+      this.showFontSetting = false
+      this.currentBackground = color
+      const readSetting = getLocalStorage(bookReadSettingKey) || {}
+      readSetting.readBg = color
+      setLocalStorage(bookReadSettingKey, readSetting)
     }
   }
 })

@@ -3,6 +3,7 @@ const sp = require('superagent')
 const cheerio = require('cheerio')
 const fs = require('fs')
 const path = require('path')
+const qs = require('qs')
 
 /**
  * https://www.biquge.com.cn/search.php?q=
@@ -41,19 +42,38 @@ router.get('/api/getNovelNameList', async ctx => {
       .children()
       .last()
       .text()
+    const novelUpdateTime = $(el)
+      .find('.result-game-item-info-tag')
+      .eq(2)
+      .children()
+      .last()
+      .text()
     titleList.push({
       id: index,
       novelHref,
       novelName,
       novelImg,
       novelDesc,
-      novelAuthor
+      novelAuthor,
+      novelUpdateTime
     })
   })
+  // 总页数
+  const totalPageStr = $('.search-result-page-main')
+    .find('a')
+    .last()
+    .attr('href')
+  const totalPageStrParams = totalPageStr.substr(totalPageStr.indexOf('?') + 1)
+  const { p = 1 } = qs.parse(totalPageStrParams)
+
   ctx.body = {
     code: 200,
     msg: '获取成功',
-    data: titleList
+    data: {
+      currentPage: Number(page),
+      totalPage: Number(p || 1),
+      list: titleList
+    }
   }
 })
 

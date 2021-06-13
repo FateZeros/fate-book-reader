@@ -15,6 +15,8 @@ import { Commit } from 'vuex'
 const state = {
   // 检索的书籍列表
   bookNameList: [],
+  bookNameCurrentPage: 1,
+  bookNameTotalPage: 1,
   // 书籍目录列表
   bookChapterList: [],
   // 章节内容
@@ -75,15 +77,29 @@ const actions = {
 
   async setBookContentEmpty({ commit }: { commit: Commit }) {
     commit('SET_BOOK_CHAPTER_CONTENT_EMPTY')
+  },
+
+  async setBookNameListEmpty({ commit }: { commit: Commit }) {
+    commit('SET_BOOK_NAME_LIST_EMPTY')
   }
 }
 
 // mutations
 const mutations = {
-  SET_BOOK_NAME_LIST: (state: any, data: IBookNameList) => {
-    // 暂时不做翻页
-    // state.bookNameList = state.bookNameList.concat(data)
-    state.bookNameList = data
+  SET_BOOK_NAME_LIST: (
+    state: any,
+    data: { currentPage: number; totalPage: number; list: IBookNameList }
+  ) => {
+    state.bookNameCurrentPage = data.currentPage
+    state.bookNameTotalPage = data.totalPage
+    if (Array.isArray(data.list) && data.list.length > 0) {
+      state.bookNameList = state.bookNameList.concat(data.list)
+    }
+  },
+
+  SET_BOOK_NAME_LIST_EMPTY: (state: any) => {
+    state.bookNameList = []
+    state.bookNameTotalPage = 1
   },
 
   SET_BOOK_CHAPTER_LIST: (state: any, data: IBookChapterList) => {

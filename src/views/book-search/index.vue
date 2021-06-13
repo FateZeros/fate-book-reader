@@ -1,20 +1,21 @@
 <template>
   <div class="book-search-wrap">
-    <van-search
-      v-model="searchValue"
-      @search="onSearch"
-      shape="round"
-      background="#1871f8"
-      placeholder="请输入搜索关键词"
-      class="book-search-input"
-    />
+    <form action="/">
+      <van-search
+        v-model="searchValue"
+        @search="onSearch"
+        shape="round"
+        background="#1871f8"
+        placeholder="请输入搜索关键词"
+        class="book-search-input"
+      />
+    </form>
     <van-list
       v-model="loading"
       :finished="finished"
       finished-text="没有更多了"
       @load="onLoad"
       class="book-name-list-wrap"
-      v-if="bookNameList.length > 0"
     >
       <div
         v-for="item in bookNameList"
@@ -31,8 +32,8 @@
         </div>
         <RightArrow />
       </div>
+      <van-empty v-if="bookNameList.length === 0" description="可以搜索你想看的书籍～" />
     </van-list>
-    <van-empty v-else description="可以搜索你想看的书籍～" />
   </div>
 </template>
 
@@ -43,6 +44,7 @@ import RightArrow from '@/components/right-arrow/index.vue'
 import { bookDetailKey } from '@/config'
 import { setLocalStorage } from '@/utils/storage'
 import { Toast } from 'vant'
+import { IBookNameList } from '@/interface/book-search'
 
 export default defineComponent({
   name: 'book-search',
@@ -59,50 +61,57 @@ export default defineComponent({
     return {
       searchValue: '',
       loading: false,
-      finished: false,
-      currentPage: 1
+      finished: false
     }
   },
 
   computed: {
-    ...mapState('bookSearch', ['bookNameList'])
+    ...mapState('bookSearch', ['bookNameList', 'bookNameCurrentPage', 'bookNameTotalPage'])
   },
 
   unmounted() {
-    this.currentPage = 1
+    this.setBookNameListEmpty()
   },
 
   methods: {
-    ...mapActions('bookSearch', ['searchBookList']),
+    ...mapActions('bookSearch', ['searchBookList', 'setBookNameListEmpty']),
 
-    getBookNameList() {
-      const postData = {
-        name: this.searchValue,
-        page: this.currentPage
+    getBookNameList(page: number) {
+      if (this.searchValue) {
+        const postData = {
+          name: this.searchValue,
+          page
+        }
+        Toast.loading({
+          message: '努力加载中...',
+          forbidClick: true
+        })
+        this.loading = true
+        this.searchBookList(postData).then(() => {
+          if (this.bookNameCurrentPage === this.bookNameTotalPage) {
+            this.finished = true
+          }
+          this.loading = false
+        }).finally(() => {
+          Toast.clear()
+        })
       }
-      Toast.loading({
-        message: '努力加载中...',
-        forbidClick: true
-      })
-      this.searchBookList(postData).then(() => {
-        this.currentPage += 1
-        this.loading = false
-      }).finally(() => {
-        Toast.clear()
-      })
     },
 
     onSearch() {
-      this.getBookNameList()
+      this.setBookNameListEmpty()
+      this.getBookNameList(1)
     },
 
     onLoad() {
-      if (this.loading) {
-        this.getBookNameList()
+      if (this.bookNameCurrentPage < this.bookNameTotalPage) {
+        if (!this.loading) {
+          this.getBookNameList(this.bookNameCurrentPage + 1)
+        }
       }
     },
 
-    handleGoBookDetail(item: any) {
+    handleGoBookDetail(item: IBookNameList) {
       setLocalStorage(bookDetailKey, item)
       this.$router.push({
         name: 'book-detail'

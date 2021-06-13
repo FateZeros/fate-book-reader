@@ -10,7 +10,11 @@ export interface IBookChapterRequest {
 export interface IBookSearchResponse {
   code: number
   msg: string
-  data: IBookNameList[]
+  data: {
+    currentPage: number
+    totalPage: number
+    list: IBookNameList[]
+  }
 }
 
 export interface IBookChapterResponse {

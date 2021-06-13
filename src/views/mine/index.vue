@@ -10,17 +10,24 @@
       is-link
       to="share-us"
     />
+    <van-cell title="版本" :value="verson" class="mt24" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { removeLocalStorage } from '@/utils/storage'
-import { bookShelfKey, bookReadRecordKey } from '@/config'
+import { bookShelfKey, bookReadRecordKey, FATE_BOOK_READER_VERSION } from '@/config'
 import { Dialog } from 'vant'
 
 export default defineComponent({
   name: 'mine',
+
+  setup() {
+    return {
+      verson: FATE_BOOK_READER_VERSION
+    }
+  },
 
   methods: {
     handleClearBookShelf() {
