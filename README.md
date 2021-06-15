@@ -53,10 +53,9 @@ yarn lint
 ## 播放器的相关截图
 
 <img src="https://github.com/FateZeros/fate-book-reader/blob/master/example/1.png" width="375px" height="669px" />
-![](https://github.com/FateZeros/fate-book-reader/blob/master/example/1.png)
-![02_书籍阅读](https://github.com/FateZeros/fate-book-reader/blob/master/example/2.png =375x669) </br>
-![03_书籍目录](https://github.com/FateZeros/fate-book-reader/blob/master/example/3.png =375x669)
-![04_书籍检索页面](https://github.com/FateZeros/fate-book-reader/blob/master/example/4.png =375x669) </br>
+<img src="https://github.com/FateZeros/fate-book-reader/blob/master/example/2.png" width="375px" height="669px" /> </br>
+<img src="https://github.com/FateZeros/fate-book-reader/blob/master/example/3.png" width="375px" height="669px" />
+<img src="https://github.com/FateZeros/fate-book-reader/blob/master/example/4.png" width="375px" height="669px" /> </br>
 
 ### 常规配置
 
