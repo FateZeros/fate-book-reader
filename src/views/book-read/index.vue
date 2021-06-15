@@ -221,6 +221,8 @@ export default defineComponent({
           setLocalStorage(bookReadRecordKey, bookReadRecord)
         })
         .finally(() => {
+          // 关闭设置页面
+          this.showReadSetting = false
           Toast.clear()
         })
     },
