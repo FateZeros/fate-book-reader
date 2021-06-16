@@ -52,6 +52,8 @@ yarn lint
 
 ## 播放器的相关截图
 
+375x669
+
 ![01_书架页面](https://github.com/FateZeros/fate-book-reader/blob/master/example/1.png = 375x669)
 ![02_书籍阅读](https://github.com/FateZeros/fate-book-reader/blob/master/example/2.png = 375x669) </br>
 ![03_书籍目录](https://github.com/FateZeros/fate-book-reader/blob/master/example/3.png = 375x669)
